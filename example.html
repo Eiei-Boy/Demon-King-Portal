@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Demon King Contract</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Nosifer&family=Roboto+Mono:wght@300&display=swap');
+
+            :root {
+                --hell-red: #ff0000;
+                --blood-dark: #4a0000;
+                --charcoal: #121212;
+                --glow: #ff4500;
+            }
+
+            body {
+                background-color: #000;
+                background-image: radial-gradient(circle at center, #2a0000 0%, #000 90%);
+                color: #ccc;
+                font-family: 'Roboto Mono', monospace;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                margin: 0;
+                overflow-x: hidden;
+                /* Prevent scrolling on mobile while signing */
+                touch-action: none;
+            }
+
+            body::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('https://www.transparenttextures.com/patterns/dark-matter.png');
+                opacity: 0.4;
+                pointer-events: none;
+                z-index: -1;
+            }
+
+            .contract-container {
+                background: rgba(10, 10, 10, 0.95);
+                border: 2px solid var(--blood-dark);
+                border-top: 5px solid var(--hell-red);
+                border-bottom: 5px solid var(--hell-red);
+                padding: 3rem;
+                width: 500px;
+                box-shadow:
+                    0 0 30px var(--blood-dark),
+                    inset 0 0 50px rgba(0, 0, 0, 0.8);
+                position: relative;
+                text-align: center;
+                margin: 20px;
+            }
+
+            h1 {
+                font-family: 'Nosifer', cursive;
+                color: var(--hell-red);
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+                text-shadow: 0 0 10px var(--glow);
+                letter-spacing: 2px;
+            }
+
+            p.subtitle {
+                font-family: 'Cinzel Decorative', cursive;
+                color: #888;
+                margin-bottom: 2rem;
+                font-size: 0.9rem;
+                border-bottom: 1px solid var(--blood-dark);
+                padding-bottom: 10px;
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+                text-align: left;
+            }
+
+            label {
+                display: block;
+                color: var(--hell-red);
+                font-family: 'Cinzel Decorative', cursive;
+                margin-bottom: 0.5rem;
+                font-size: 1.1rem;
+            }
+
+            input,
+            textarea,
+            select {
+                width: 100%;
+                background: #000;
+                border: 1px solid var(--blood-dark);
+                color: #fff;
+                padding: 10px;
+                font-family: 'Roboto Mono', monospace;
+                font-size: 1rem;
+                box-sizing: border-box;
+                transition: 0.3s;
+            }
+
+            input:focus,
+            textarea:focus,
+            select:focus {
+                outline: none;
+                border-color: var(--glow);
+                box-shadow: 0 0 10px var(--blood-dark);
+            }
+
+            textarea {
+                resize: vertical;
+                height: 80px;
+            }
+
+            .dates {
+                display: flex;
+                gap: 15px;
+            }
+
+            input[type='date'] {
+                color-scheme: dark;
+            }
+
+            /* --- SIGNATURE CANVAS STYLES --- */
+            .signature-wrapper {
+                margin-top: 20px;
+                position: relative;
+            }
+
+            canvas {
+                background: #050000;
+                border: 2px dashed var(--blood-dark);
+                cursor: crosshair;
+                box-shadow: inset 0 0 20px #000;
+                width: 100%; /* Responsive width */
+                display: block;
+            }
+
+            .clear-sig {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                background: transparent;
+                border: 1px solid #444;
+                color: #666;
+                font-size: 0.7rem;
+                cursor: pointer;
+                padding: 2px 5px;
+            }
+            .clear-sig:hover {
+                color: var(--hell-red);
+                border-color: var(--hell-red);
+            }
+
+            .btn-seal {
+                background: transparent;
+                color: var(--hell-red);
+                font-family: 'Nosifer', cursive;
+                font-size: 1.5rem;
+                border: 2px solid var(--hell-red);
+                padding: 15px 30px;
+                cursor: pointer;
+                margin-top: 25px;
+                width: 100%;
+                transition: all 0.4s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .btn-seal:hover {
+                background: var(--hell-red);
+                color: #000;
+                box-shadow: 0 0 30px var(--glow);
+            }
+
+            .rune {
+                position: absolute;
+                color: rgba(255, 0, 0, 0.1);
+                font-size: 4rem;
+                pointer-events: none;
+                user-select: none;
+                font-family: 'Cinzel Decorative', cursive;
+            }
+            .r-top-left {
+                top: 10px;
+                left: 10px;
+                transform: rotate(-15deg);
+            }
+            .r-bottom-right {
+                bottom: 10px;
+                right: 10px;
+                transform: rotate(15deg);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="contract-container">
+            <div class="rune r-top-left">†</div>
+            <div class="rune r-bottom-right">Ω</div>
+
+            <h1>Demon Pact</h1>
+            <p class="subtitle">By signing, you bind your soul to the void.</p>
+
+            <form>
+                <div class="form-group">
+                    <label for="pact-title">Title of Desire</label>
+                    <input
+                        type="text"
+                        id="pact-title"
+                        placeholder="e.g., Infinite Wealth, Vengeance..."
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="pact-details">Terms of Service</label>
+                    <textarea
+                        id="pact-details"
+                        placeholder="Describe what you demand from the Demon King..."
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="payment">Price of Exchange</label>
+                    <select id="payment">
+                        <option value="soul">My Eternal Soul</option>
+                        <option value="firstborn">Firstborn Child</option>
+                        <option value="humanity">My Humanity</option>
+                        <option value="service">100 Years of Servitude</option>
+                    </select>
+                </div>
+
+                <div class="dates">
+                    <div class="form-group" style="flex: 1">
+                        <label for="start">Summon Date</label>
+                        <input type="date" id="start" />
+                    </div>
+                    <div class="form-group" style="flex: 1">
+                        <label for="end">Day of Reckoning</label>
+                        <input type="date" id="end" />
+                    </div>
+                </div>
+
+                <div class="form-group signature-wrapper">
+                    <label>Sign in Blood (Draw Here)</label>
+                    <canvas id="bloodCanvas" height="150"></canvas>
+                    <button type="button" class="clear-sig" onclick="clearCanvas()">
+                        X Clear Blood
+                    </button>
+                </div>
+
+                <button type="button" class="btn-seal" onclick="sealPact()">SEAL THE PACT</button>
+            </form>
+        </div>
+
+        <script>
+            /* --- CANVAS LOGIC --- */
+            const canvas = document.getElementById('bloodCanvas');
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+            let hasSigned = false;
+
+            // Make canvas fill width correctly
+            function resizeCanvas() {
+                const parentWidth = canvas.parentElement.offsetWidth;
+                canvas.width = parentWidth;
+                canvas.height = 150;
+                // Reset styles after resize
+                setStrokeStyle();
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            function setStrokeStyle() {
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = '#b30000'; // Deep Blood Red
+                ctx.shadowBlur = 3;
+                ctx.shadowColor = '#ff3333'; // Glowing wet edge
+            }
+            setStrokeStyle();
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                // Get position relative to canvas
+                const rect = canvas.getBoundingClientRect();
+                let clientX, clientY;
+
+                if (e.type.includes('touch')) {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                    e.preventDefault(); // Stop scrolling on mobile
+                } else {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                }
+
+                const x = clientX - rect.left;
+                const y = clientY - rect.top;
+
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                [lastX, lastY] = [x, y];
+                hasSigned = true;
+            }
+
+            function startDrawing(e) {
+                isDrawing = true;
+                const rect = canvas.getBoundingClientRect();
+                if (e.type.includes('touch')) {
+                    lastX = e.touches[0].clientX - rect.left;
+                    lastY = e.touches[0].clientY - rect.top;
+                } else {
+                    lastX = e.clientX - rect.left;
+                    lastY = e.clientY - rect.top;
+                }
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+                ctx.beginPath(); // Stop the path so lines don't connect weirdly
+            }
+
+            // Mouse Events
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            // Touch Events (Mobile)
+            canvas.addEventListener('touchstart', startDrawing);
+            canvas.addEventListener('touchmove', draw);
+            canvas.addEventListener('touchend', stopDrawing);
+
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                hasSigned = false;
+            }
+
+            /* --- SUBMISSION LOGIC --- */
+            function sealPact() {
+                const btn = document.querySelector('.btn-seal');
+                const title = document.getElementById('pact-title').value;
+
+                if (!title) {
+                    alert('The Demon King ignores empty whispers. Enter a Title.');
+                    return;
+                }
+
+                if (!hasSigned) {
+                    alert('You must sign in blood before the pact is valid.');
+                    canvas.style.borderColor = 'red';
+                    setTimeout(() => (canvas.style.borderColor = '#4a0000'), 500);
+                    return;
+                }
+
+                // Success Animation
+                document.body.style.background = '#000';
+                const container = document.querySelector('.contract-container');
+
+                // Make it look like it's burning/locked
+                container.style.boxShadow = '0 0 100px red';
+                container.style.borderColor = '#fff';
+
+                btn.innerHTML = 'SOUL BOUND';
+                btn.style.borderColor = '#fff';
+                btn.style.color = '#fff';
+                btn.disabled = true;
+
+                // Intense Shake
+                container.style.transition = '0.1s';
+                let shakeInterval = setInterval(() => {
+                    const x = Math.random() * 10 - 5;
+                    const y = Math.random() * 10 - 5;
+                    container.style.transform = `translate(${x}px, ${y}px)`;
+                }, 50);
+
+                setTimeout(() => {
+                    clearInterval(shakeInterval);
+                    container.style.transform = 'translate(0,0)';
+                    alert('It is done. The shadows will come for you when the time is right.');
+                }, 1000);
+            }
+        </script>
+    </body>
+</html>
